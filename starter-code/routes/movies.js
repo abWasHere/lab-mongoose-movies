@@ -1,57 +1,57 @@
 const express = require("express");
 const router = express.Router();
-const celebrityModel = require("./../models/Celebrity");
+const movieModel = require("./../models/Movie");
 
 // HOME ROUTE
 router.get("/", (req, res, next) => {
-   celebrityModel
+   movieModel
       .find()
-      .then((celebrities) => res.render("celebrities/index", { celebrities }))
+      .then((movies) => res.render("movies/index", { movies }))
       .catch(next);
 });
 
-// NEW CELEB ROUTE
+// NEW MOVIE ROUTE
 router.get("/new", (req, res, next) => {
-   res.render("celebrities/new");
+   res.render("movies/new");
 });
 
 router.post("/new", (req, res, next) => {
-   const { name, occupation, catchPhrase } = req.body;
-   celebrityModel
+   const { title, genre, plot } = req.body;
+   movieModel
       .create(req.body)
-      .then(() => res.redirect("/celebrities"))
+      .then(() => res.redirect("/movies"))
       .catch(() => res.redirect("/"));
 });
 
-// CELEB DETAILS ROUTE
+// MOVIE DETAILS ROUTE
 router.get("/:id", (req, res, next) => {
-   celebrityModel
+   movieModel
       .findById(req.params.id)
-      .then((oneCelebrity) => res.render("celebrities/show", oneCelebrity))
+      .then((oneMovie) => res.render("movies/show", oneMovie))
       .catch(next);
 });
 
-// MODIFY CELEB DETAILS ROUTE
+// MODIFY MOVIE DETAILS ROUTE
 router.get("/:id/edit", (req, res, next) => {
-   celebrityModel
+   movieModel
       .findById(req.params.id)
-      .then((celebrity) => res.render("celebrities/edit", celebrity))
+      .then((movie) => res.render("movies/edit", movie))
       .catch(next);
 });
 
 router.post("/:id/edit", (req, res, next) => {
    // const { name, occupation, catchPhrase } = req.body;
-   celebrityModel
+   movieModel
       .findByIdAndUpdate(req.params.id, req.body)
-      .then(() => res.redirect(`/celebrities/${req.params.id}`))
+      .then(() => res.redirect(`/movies/${req.params.id}`))
       .catch(next);
 });
 
-// DELETE CELEB ROUTE
+// DELETE MOVIE ROUTE
 router.post("/:id/delete", (req, res, next) => {
-   celebrityModel
+   movieModel
       .findByIdAndRemove(req.params.id)
-      .then(() => res.redirect("/celebrities"))
+      .then(() => res.redirect("/movies"))
       .catch(next);
 });
 

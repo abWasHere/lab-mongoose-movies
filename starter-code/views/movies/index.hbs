@@ -1,0 +1,21 @@
+<h2>Manage movies</h2>
+
+{{#each movies}}
+<li>
+    <a href="/movies/{{this._id}}">{{this.title}}</a>
+    <form action="/movies/{{this._id}}/delete" method="post">
+    <button type="submit">Delete</button>
+    </form>
+    <br>
+</li>
+{{/each}}
+
+<br>
+
+<a href="/movies/new">Create new movie</a>
+
+
+<br>
+<br>
+
+<a href="/">GO BACK HOME !</a>
